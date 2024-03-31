@@ -1,6 +1,8 @@
 return {
     "neovim/nvim-lspconfig",
+
     dependencies = {
+        'ray-x/cmp-treesitter',
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-path',
@@ -58,31 +60,43 @@ return {
                     require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
                 end,
             },
-
+            window = {
+                completion = cmp.config.window.bordered(),
+                documentation = cmp.config.window.bordered(),
+            },
             mapping = cmp.mapping.preset.insert({
                 ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
                 ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
                 ['<Enter>'] = cmp.mapping.confirm({ select = true }),
-                ["<C-Space>"] = cmp.mapping.complete(),
+                ['<C-Space>'] = cmp.mapping.complete(),
             }),
 
             sources = cmp.config.sources({
+                { name = 'treesitter' },
                 { name = 'nvim_lsp' },
-                { name = 'luasnip' }, -- For luasnip users.
+                { name = 'luasnip' },
                 }, {
                     { name = 'buffer' },
                 })
             })
 
-    vim.diagnostic.config({
-        float = {
-        focusable = false,
-        style = "minimal",
-        border = "rounded",
-        source = "always",
-        header = "",
-        prefix = "",
-        },
-    })
-    end
+        vim.api.nvim_create_autocmd('LspAttach', {
+            group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+            callback = function(ev)
+                local opts = { buffer = ev.buf }
+                vim.keymap.set('n', '<leader>lgd', vim.lsp.buf.declaration, opts)
+            end
+        })
+
+        vim.diagnostic.config({
+            float = {
+            focusable = false,
+            style = "minimal",
+            border = "rounded",
+            source = "always",
+            header = "",
+            prefix = "",
+            },
+        })
+    end,
 }

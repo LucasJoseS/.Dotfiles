@@ -8,8 +8,16 @@ return {
         require('telescope').setup({})
 
         local builtin = require('telescope.builtin')
-        vim.keymap.set('n', '<leader>tff', builtin.find_files, {})
-        vim.keymap.set('n', '<leader>tfg', builtin.git_files, {})
-        vim.keymap.set('n', '<leader>tsw', builtin.live_grep, {})
+        require('which-key').register({
+            t = {
+                name = 'Telescope',
+                f = {
+                    name = 'Find',
+                    f = { builtin.find_files, 'File' },
+                    g = { builtin.git_files, 'Git Files'}
+                },
+                s = { builtin.live_grep, 'Search' }
+            }
+        }, { prefix = '<leader>' })
     end
 }
