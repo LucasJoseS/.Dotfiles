@@ -83,8 +83,13 @@ return {
         vim.api.nvim_create_autocmd('LspAttach', {
             group = vim.api.nvim_create_augroup('UserLspConfig', {}),
             callback = function(ev)
-                local opts = { buffer = ev.buf }
-                vim.keymap.set('n', '<leader>lgd', vim.lsp.buf.declaration, opts)
+                require('which-key').register({
+                    l = {
+                        name = 'LSP',
+                        d = { vim.lsp.buf.definition, 'Definition', buffer = ev.buf },
+                        i = { '<cmd>LspInfo<cr>', 'Info' }
+                    }
+                }, { prefix = '<leader>' })
             end
         })
 
