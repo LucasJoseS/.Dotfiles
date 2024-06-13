@@ -9,7 +9,8 @@ return {
         require('which-key').register({
             w = { '<cmd>w<cr>', 'Save' },
             q = { '<cmd>q<cr>', 'Quit' },
-            e = { "<cmd>Lex 20<cr>", 'Files' },
+            e = { '<cmd>Lex 20<cr>', 'Files' },
+            c = { '<cmd>!./build.sh<cr>', 'Compile' },
         }, { prefix = '<leader>' })
     end,
 }
