@@ -1,2 +1,6 @@
 [window]
 startup_mode = "Fullscreen"
+
+[shell]
+program = "/bin/zsh"
+args = ["-c", "tmux"]
