@@ -9,7 +9,10 @@ return {
         'hrsh7th/cmp-cmdline',
         'hrsh7th/nvim-cmp',
 
-        'L3MON4D3/LuaSnip',
+        {
+            'L3MON4D3/LuaSnip',
+            build = "make install_jsregexp",
+        },
         'saadparwaiz1/cmp_luasnip',
 
         'williamboman/mason.nvim',
@@ -83,13 +86,11 @@ return {
         vim.api.nvim_create_autocmd('LspAttach', {
             group = vim.api.nvim_create_augroup('UserLspConfig', {}),
             callback = function(ev)
-                require('which-key').register({
-                    l = {
-                        name = 'LSP',
-                        d = { vim.lsp.buf.definition, 'Definition', buffer = ev.buf },
-                        i = { '<cmd>LspInfo<cr>', 'Info' }
-                    }
-                }, { prefix = '<leader>' })
+                require('which-key').add({
+                    {'<leader>l', group = "Lsp"},
+                    {'<leader>ld', vim.lsp.buf.definition, desc="Definition", buffer = ev.buf},
+                    {'<leader>li', '<cmd>LspInfo<cr>', desc="Info"},
+                })
             end
         })
 

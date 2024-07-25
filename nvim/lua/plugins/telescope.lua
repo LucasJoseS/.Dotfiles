@@ -6,18 +6,12 @@ return {
     },
     config = function ()
         require('telescope').setup({})
-
-        local builtin = require('telescope.builtin')
-        require('which-key').register({
-            t = {
-                name = 'Telescope',
-                f = {
-                    name = 'Find',
-                    f = { builtin.find_files, 'File' },
-                    g = { builtin.git_files, 'Git Files'}
-                },
-                s = { builtin.live_grep, 'Search' }
-            }
-        }, { prefix = '<leader>' })
+        require('which-key').add({
+            {'<leader>t', group = 'Telescope'},
+            {'<leader>tf', group = "Find"},
+            {'<leader>tff', '<cmd>Telescope find_files<cr>', desc = 'File'},
+            {"<leader>tfg", '<cmd>Telescope git_files<cr>', desc = "Git Files"},
+            {"<leader>ts", '<cmd>Telescope live_grep<cr>', desc = "Search"},
+        })
     end
 }

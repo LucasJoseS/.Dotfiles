@@ -6,11 +6,10 @@ return {
     end,
 
     config = function ()
-        require('which-key').register({
-            w = { '<cmd>w<cr>', 'Save' },
-            q = { '<cmd>q<cr>', 'Quit' },
-            e = { '<cmd>Lex 20<cr>', 'Files' },
-            c = { '<cmd>!./build.sh<cr>', 'Compile' },
-        }, { prefix = '<leader>' })
+        require('which-key').add({
+            {'<leader>w', '<cmd>w<cr>', desc = "Save"},
+            {'<leader>q', '<cmd>q<cr>', desc = 'Quit'},
+            {'<leader>e', '<cmd>Lex 20<cr>', desc = 'Files'},
+        })
     end,
 }
